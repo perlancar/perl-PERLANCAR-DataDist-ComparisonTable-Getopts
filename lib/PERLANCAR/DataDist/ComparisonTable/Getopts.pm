@@ -139,6 +139,20 @@ _
 }
 
 {
+    require Getopt::Lucid;
+    add_participant("Getopt::Lucid $Getopt::Lucid::VERSION", <<'_');
+use Getopt::Lucid qw(:all);
+my $opt = Getopt::Lucid->getopt([
+    Param('foo'),
+    Param('bar')->default('default-bar'),
+]);
+print "foo=", $opt->get_foo, "\n";
+print "bar=", $opt->get_bar, "\n";
+_
+
+}
+
+{
     add_participant("argparse (python)", <<'_', 'python3');
 import argparse
 
