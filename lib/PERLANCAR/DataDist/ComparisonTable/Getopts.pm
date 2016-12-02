@@ -28,6 +28,8 @@ sub add_participant {
 
     if ($interp =~ m!/perl!) {
         system({die=>1}, $interp, "-c", $tempfpath);
+    } else {
+        say "$tempfpath ($interp) not checked for syntax";
     }
 
     my $rownum = 0;
@@ -132,6 +134,21 @@ print <<EOF;
 foo=$opts->{foo}
 bar=$opts->{bar}
 EOF
+_
+
+}
+
+{
+    add_participant("argparse (python)", <<'_', 'python3');
+import argparse
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--foo', type=str)
+    parser.add_argument('--bar', type=str, default='default-bar')
+    args = parser.parse_args()
+    print("foo={}".format(args.foo))
+    print("bar={}".format(args.bar))
 _
 
 }
